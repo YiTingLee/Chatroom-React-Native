@@ -63,7 +63,6 @@ const styles = {
 const mapStateToProps = state => {
   const { email, loading, mails } = state.addfriend;
 
-  console.log('mail: ', mails);
   return {
     email,
     loading,

@@ -17,7 +17,9 @@ export const addFriend = ({ email }) => {
         });
 
         value.forEach((v) => {
-          console.log('test:', v.email);
+          if (email === v.email) {
+            addFriendSuccess(firebase.auth().currentUser.email, v.email);
+          }
         });
 
         dispatch({
@@ -33,4 +35,8 @@ export const addEmailChanged = (text) => {
     type: ADD_EMAIL_CHANGED,
     payload: text
   };
+};
+
+const addFriendSuccess = (email1, email2) => {
+  console.log(email1, email2);
 };
