@@ -1,6 +1,7 @@
 import {
   ADD_FRIEND_LOADING,
-  ADD_EMAIL_CHANGED
+  ADD_EMAIL_CHANGED,
+  ADD_FRIEND_MAIL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -28,6 +29,8 @@ export default (state = INITIAL_STATE, action) => {
     //   return { ...state, error: 'Authentication Failed.', password: '', loading: false };
     case ADD_FRIEND_LOADING:
       return { ...state, loading: true, error: '' };
+    case ADD_FRIEND_MAIL:
+      return { ...state, mails: action.payload };
     default:
       return state;
   }

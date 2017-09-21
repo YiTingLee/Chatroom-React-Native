@@ -50,9 +50,8 @@ const loginUserSuccess = (dispatch, user) => {
 };
 
 const createUserSuccess = (dispatch, user) => {
-  const { currentUser } = firebase.auth();
 
-  firebase.database().ref(`users/${currentUser.uid}/mail`)
+  firebase.database().ref(`users/mail`)
     .push({ email: user.email })
     .then(() => {
       dispatch({

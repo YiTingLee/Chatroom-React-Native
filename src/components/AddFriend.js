@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
@@ -60,10 +61,13 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  const { email, loading } = state.addfriend;
+  const { email, loading, mails } = state.addfriend;
+
+  console.log('mail: ', mails);
   return {
     email,
-    loading
+    loading,
+    mails
   };
 };
 
