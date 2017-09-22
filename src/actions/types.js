@@ -8,3 +8,5 @@ export const ADD_FRIEND_LOADING = 'add_friend_loading';
 export const ADD_EMAIL_CHANGED = 'add_email_changed';
 export const ADD_FRIEND_SUCCRSS = 'add_friend_success';
 export const ADD_FRIEND_FAIL = 'add_friend_fail';
+
+export const FETCH_FRIEND_LIST = 'fetch_friend_list';
