@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 import {
   ADD_FRIEND_LOADING,
   ADD_EMAIL_CHANGED,
-  ADD_FRIEND_MAIL
+  ADD_FRIEND_MAIL,
+  ADD_FRIEND_SUCCRSS
 } from './types';
 
 export const addFriend = ({ email }) => {
@@ -18,7 +20,7 @@ export const addFriend = ({ email }) => {
 
         value.forEach((v) => {
           if (email === v.email) {
-            addFriendSuccess(firebase.auth().currentUser.email, v.email);
+            addFriendSuccess(dispatch, firebase.auth().currentUser, v);
           }
         });
 
@@ -37,6 +39,23 @@ export const addEmailChanged = (text) => {
   };
 };
 
-const addFriendSuccess = (email1, email2) => {
-  console.log(email1, email2);
+const addFriendSuccess = (dispatch, user, friend) => {
+  console.log('user:', user);
+  console.log('friend:', friend);
+  const chatroomId = rendomId(1, 100000);
+
+  firebase.database().ref(`user/${user.uid}/friends`)
+  .push({ id: friend.email, uid: friend.uid, chatroomId })
+  .then(() => {
+    firebase.database().ref(`user/${friend.uid}/friends`)
+      .push({ id: user.email, uid: user.uid, chatroomId })
+      .then(() => {
+        dispatch({ type: ADD_FRIEND_SUCCRSS });
+        Actions.main({ type: 'reset' });
+      });
+  });
+};
+
+const rendomId = (min, max) => {
+  return (Math.random() * (max - min)) + min;
 };

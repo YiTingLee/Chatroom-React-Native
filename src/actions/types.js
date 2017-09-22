@@ -7,3 +7,4 @@ export const LOGIN_USER = 'login_user';
 export const ADD_FRIEND_LOADING = 'add_friend_loading';
 export const ADD_EMAIL_CHANGED = 'add_email_changed';
 export const ADD_FRIEND_MAIL = 'add_friend_mail';
+export const ADD_FRIEND_SUCCRSS = 'add_friend_success';
