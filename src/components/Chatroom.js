@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { sendMessage, messageChanged, messageFetch } from '../actions';
 import { Card, CardSection, Input, Button } from './common';
+import MessageListItem from './MessageListItem';
 
 
 class Chatroom extends Component {
@@ -11,6 +12,11 @@ class Chatroom extends Component {
     const { friend } = this.props;
 
     this.props.messageFetch(friend);
+    this.createDataSource(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {  //props updated
+    this.createDataSource(nextProps);
   }
 
   onMessageChange(text) {
@@ -23,6 +29,18 @@ class Chatroom extends Component {
     this.props.sendMessage(text, friend);
   }
 
+  createDataSource({ messages }) {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
+    this.dataSource = ds.cloneWithRows(messages);
+  }
+
+  renderRow(message) {
+    return <MessageListItem message={message} />;
+  }
+
   render() {
     return (
       <Card>
@@ -33,10 +51,19 @@ class Chatroom extends Component {
             value={this.props.text}
           />
         </CardSection>
+
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
             送出!
           </Button>
+        </CardSection>
+
+        <CardSection>
+          <ListView
+            enableEmptySections
+            dataSource={this.dataSource}
+            renderRow={this.renderRow}
+          />
         </CardSection>
       </Card>
     );
@@ -45,12 +72,12 @@ class Chatroom extends Component {
 
 const mapStateToProps = state => {
   const { text } = state.message;
-  const messageList = _.map(state.message.messageList, (val, uid) => {
+  const messages = _.map(state.message.messageList, (val, uid) => {
     return { ...val, uid };
   });
-  console.log('messageList', messageList);
+  console.log('messageList', messages);
 
-  return { text, messageList };
+  return { text, messages };
 };
 
 export default connect(mapStateToProps, {
