@@ -4,12 +4,14 @@ import { Actions } from 'react-native-router-flux';
 import {
   ADD_FRIEND_LOADING,
   ADD_EMAIL_CHANGED,
-  ADD_FRIEND_MAIL,
-  ADD_FRIEND_SUCCRSS
+  ADD_FRIEND_SUCCRSS,
+  ADD_FRIEND_FAIL
 } from './types';
 
 export const addFriend = ({ email }) => {
   return (dispatch) => {
+    let addFriendFlag = false;
+
     dispatch({ type: ADD_FRIEND_LOADING });
 
     firebase.database().ref(`/users/mail`)
@@ -19,15 +21,16 @@ export const addFriend = ({ email }) => {
         });
 
         value.forEach((v) => {
+          console.log('value:', v);
           if (email === v.email) {
+            addFriendFlag = true;
             addFriendSuccess(dispatch, firebase.auth().currentUser, v);
           }
         });
 
-        dispatch({
-          type: ADD_FRIEND_MAIL,
-          payload: value
-        });
+        if (addFriendFlag === false) {
+          dispatch({ type: ADD_FRIEND_FAIL });
+        }
       });
   };
 };
@@ -40,14 +43,14 @@ export const addEmailChanged = (text) => {
 };
 
 const addFriendSuccess = (dispatch, user, friend) => {
-  console.log('user:', user);
+  console.log('user:', user.uid);
   console.log('friend:', friend);
   const chatroomId = rendomId(1, 100000);
 
   firebase.database().ref(`user/${user.uid}/friends`)
-  .push({ id: friend.email, uid: friend.uid, chatroomId })
+  .push({ id: friend.email, uid: friend.userid, chatroomId })
   .then(() => {
-    firebase.database().ref(`user/${friend.uid}/friends`)
+    firebase.database().ref(`user/${friend.userid}/friends`)
       .push({ id: user.email, uid: user.uid, chatroomId })
       .then(() => {
         dispatch({ type: ADD_FRIEND_SUCCRSS });

@@ -61,12 +61,12 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  const { email, loading, mails } = state.addfriend;
+  const { email, loading, error } = state.addfriend;
 
   return {
     email,
     loading,
-    mails
+    error
   };
 };
 

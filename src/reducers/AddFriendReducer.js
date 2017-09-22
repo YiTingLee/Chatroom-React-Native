@@ -1,8 +1,8 @@
 import {
   ADD_FRIEND_LOADING,
   ADD_EMAIL_CHANGED,
-  ADD_FRIEND_MAIL,
-  ADD_FRIEND_SUCCRSS
+  ADD_FRIEND_SUCCRSS,
+  ADD_FRIEND_FAIL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -17,12 +17,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, email: action.payload };
     case ADD_FRIEND_SUCCRSS:
       return { INITIAL_STATE };
-    // case LOGIN_USER_FAIL:
-    //   return { ...state, error: 'Authentication Failed.', password: '', loading: false };
+    case ADD_FRIEND_FAIL:
+      return { ...state, error: 'Email Error.', loading: false };
     case ADD_FRIEND_LOADING:
       return { ...state, loading: true, error: '' };
-    case ADD_FRIEND_MAIL:
-      return { ...state, mails: action.payload };
     default:
       return state;
   }

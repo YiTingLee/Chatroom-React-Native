@@ -54,7 +54,7 @@ const createUserSuccess = (dispatch, user) => {
   firebase.database().ref(`users/mail`)
     .push({
       email: user.email,
-      uid: user.uid
+      userid: user.uid
     })
     .then(() => {
       dispatch({
