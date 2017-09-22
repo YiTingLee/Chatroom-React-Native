@@ -5,7 +5,7 @@ import { CardSection } from './common';
 
 class ListItem extends Component {
   onRowPress() {
-    // Actions.employeeEdit({ employee: this.props.employee });
+    Actions.chatroom({ friend: this.props.friend });
   }
 
   render() {

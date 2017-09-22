@@ -10,3 +10,6 @@ export const ADD_FRIEND_SUCCRSS = 'add_friend_success';
 export const ADD_FRIEND_FAIL = 'add_friend_fail';
 
 export const FETCH_FRIEND_LIST = 'fetch_friend_list';
+
+export const SEND_MESSAGE_CHANGED = 'send_message_changed';
+export const SEND_MESSAGE_SUCCESS = 'send_message_success';

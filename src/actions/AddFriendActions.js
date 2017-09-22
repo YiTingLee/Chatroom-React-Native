@@ -45,7 +45,7 @@ export const addEmailChanged = (text) => {
 const addFriendSuccess = (dispatch, user, friend) => {
   console.log('user:', user.uid);
   console.log('friend:', friend);
-  const chatroomId = rendomId(1, 100000);
+  const chatroomId = Math.floor(rendomId(1, 1000000));
 
   firebase.database().ref(`user/${user.uid}/friends`)
   .push({ id: friend.email, uid: friend.userid, chatroomId })

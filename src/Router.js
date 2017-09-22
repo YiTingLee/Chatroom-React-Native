@@ -3,6 +3,7 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import FriendList from './components/FriendList';
 import AddFriend from './components/AddFriend';
+import Chatroom from './components/Chatroom';
 
 const RouterComponent = () => {
   return (
@@ -21,6 +22,7 @@ const RouterComponent = () => {
             title="Friend List"
           />
           <Scene key="addFriend" component={AddFriend} title="Add Friend" />
+          <Scene key="chatroom" component={Chatroom} title="Chatroom" />
         </Scene>
       </Scene>
     </Router>
