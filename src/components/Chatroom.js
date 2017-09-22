@@ -1,11 +1,18 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import { sendMessage, messageChanged } from '../actions';
+import { sendMessage, messageChanged, messageFetch } from '../actions';
 import { Card, CardSection, Input, Button } from './common';
 
 
 class Chatroom extends Component {
+  componentWillMount() {
+    const { friend } = this.props;
+
+    this.props.messageFetch(friend);
+  }
+
   onMessageChange(text) {
     this.props.messageChanged(text);
   }
@@ -38,8 +45,16 @@ class Chatroom extends Component {
 
 const mapStateToProps = state => {
   const { text } = state.message;
+  const messageList = _.map(state.message.messageList, (val, uid) => {
+    return { ...val, uid };
+  });
+  console.log('messageList', messageList);
 
-  return { text };
+  return { text, messageList };
 };
 
-export default connect(mapStateToProps, { sendMessage, messageChanged })(Chatroom);
+export default connect(mapStateToProps, {
+  sendMessage,
+  messageChanged,
+  messageFetch
+})(Chatroom);

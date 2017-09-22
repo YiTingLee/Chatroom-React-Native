@@ -13,3 +13,4 @@ export const FETCH_FRIEND_LIST = 'fetch_friend_list';
 
 export const SEND_MESSAGE_CHANGED = 'send_message_changed';
 export const SEND_MESSAGE_SUCCESS = 'send_message_success';
+export const FETCH_MESSAGE_SUCCESS = 'fetch_message_success';
